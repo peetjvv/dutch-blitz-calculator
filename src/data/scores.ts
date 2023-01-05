@@ -1,4 +1,5 @@
-import { Reducer } from 'react';
+import { Reducer, useMemo } from 'react';
+import { useStore } from '.';
 import { PayloadAction } from '../types/reducer';
 import { throwIfNotNever } from '../util/typescript';
 
@@ -111,4 +112,42 @@ export const reducer: Reducer<ScoresState, ScoresAction> = (
       throwIfNotNever(action);
       return prevState;
   }
+};
+
+export const usePlayerCurrentScore = (playerId: string) => {
+  const { state } = useStore();
+
+  const scoreForPlayer = useMemo(
+    () =>
+      state.scores.reduce((agg, curr) => {
+        agg += (curr[playerId]?.cardsInBlitzCount ?? 0) * -2;
+        agg += curr[playerId]?.cardsPlayedCount ?? 0;
+        return agg;
+      }, 0),
+    [state.scores]
+  );
+
+  return scoreForPlayer;
+};
+
+export const usePlayersCurrentScores = () => {
+  const { state } = useStore();
+
+  const scoresPerPlayer = useMemo(
+    () =>
+      state.scores.reduce<{ [playerId: string]: number }>((agg, curr) => {
+        Object.entries(curr).forEach(([playerId, cards]) => {
+          if (!agg[playerId]) {
+            agg[playerId] = 0;
+          }
+          agg[playerId] += (cards.cardsInBlitzCount ?? 0) * -2;
+          agg[playerId] += cards.cardsPlayedCount ?? 0;
+        });
+
+        return agg;
+      }, {}),
+    [state.scores]
+  );
+
+  return scoresPerPlayer;
 };

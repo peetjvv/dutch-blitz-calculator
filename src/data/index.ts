@@ -1,4 +1,5 @@
-import { Reducer } from 'react';
+import { debounce } from 'lodash';
+import { createContext, Reducer, useContext } from 'react';
 import { throwIfNotNever } from '../util/typescript';
 import {
   GameInfoAction,
@@ -19,7 +20,6 @@ export type State = {
   gameInfo: GameInfoState;
   scores: ScoresState;
 };
-export type AllActions = GameInfoAction | ScoresAction;
 
 const defaultState: State = {
   gameInfo: GameInfoDefaultState,
@@ -36,6 +36,12 @@ export const getInitialState = (): State => {
   // fallback to default state
   return defaultState;
 };
+
+export type AllActions = GameInfoAction | ScoresAction;
+
+export type Dispatch = React.Dispatch<AllActions>;
+
+export type Store = { state: State; dispatch: Dispatch };
 
 export const combinedReducer: Reducer<State, AllActions> = (state, action) => {
   let nextState: State;
@@ -59,6 +65,20 @@ export const combinedReducer: Reducer<State, AllActions> = (state, action) => {
       return state;
   }
 
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(nextState));
+  debounce(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(nextState));
+  }, 1000)();
+
   return nextState;
 };
+
+export const reducerContext = createContext<Store>({
+  state: defaultState,
+  dispatch: () => null,
+});
+
+const createStoreHook = () => () => useContext(reducerContext);
+export const useStore: () => Store = createStoreHook();
+
+const createDispatchHook = () => () => useStore().dispatch;
+export const useDispatch: () => Dispatch = createDispatchHook();
