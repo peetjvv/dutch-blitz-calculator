@@ -1,17 +1,18 @@
 import { debounce } from 'lodash';
 import { createContext, Reducer, useContext } from 'react';
+import { isState } from '../types/reducer';
 import { throwIfNotNever } from '../util/typescript';
 import {
+  defaultState as GameInfoDefaultState,
   GameInfoAction,
   GameInfoState,
-  defaultState as GameInfoDefaultState,
   reducer as GameInfoReducer,
 } from './game-info';
 import {
-  ScoresAction,
-  ScoresState,
   defaultState as ScoresDefaultState,
   reducer as ScoresReducer,
+  ScoresAction,
+  ScoresState,
 } from './scores';
 
 const LOCAL_STORAGE_KEY = 'persistedState';
@@ -30,7 +31,11 @@ export const getInitialState = (): State => {
   // check localStorage
   const localStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
   if (!!localStorageValue) {
-    return JSON.parse(localStorageValue);
+    const parsedLocalStorage = JSON.parse(localStorageValue);
+
+    if (isState(parsedLocalStorage)) {
+      return parsedLocalStorage;
+    }
   }
 
   // fallback to default state
