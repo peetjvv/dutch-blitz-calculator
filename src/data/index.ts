@@ -15,6 +15,7 @@ import {
   ScoresState,
 } from './scores';
 
+const LOCAL_STORAGE_UPDATE_DEBOUNCE_MS = 1000;
 const LOCAL_STORAGE_KEY = 'persistedState';
 
 export type State = {
@@ -72,7 +73,7 @@ export const combinedReducer: Reducer<State, AllActions> = (state, action) => {
 
   debounce(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(nextState));
-  }, 1000)();
+  }, LOCAL_STORAGE_UPDATE_DEBOUNCE_MS)();
 
   return nextState;
 };

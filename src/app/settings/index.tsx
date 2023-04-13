@@ -39,6 +39,21 @@ const Settings: React.FC = () => {
 
       <NavLink to="/players">Edit players</NavLink>
       <NavLink to="/players/new">Create new player</NavLink>
+      <button
+        onClick={() => {
+          dispatch({ type: 'GAME_INFO', subType: 'RESET' });
+          dispatch({ type: 'SCORES', subType: 'RESET' });
+        }}
+      >
+        Reset game
+      </button>
+      <button
+        onClick={() => {
+          dispatch({ type: 'SCORES', subType: 'RESET' });
+        }}
+      >
+        Clear rounds
+      </button>
     </div>
   );
 };

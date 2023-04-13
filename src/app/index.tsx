@@ -3,7 +3,6 @@ import { useEffect, useReducer } from 'react';
 import {
   createBrowserRouter,
   Outlet,
-  redirect,
   RouterProvider,
   useNavigate,
   useNavigation,
@@ -33,7 +32,7 @@ const Root: React.FC = () => {
         navigate(`/scores-overview`);
       }
     }
-  }, []);
+  }, [window.location.pathname]);
 
   return (
     <div className="content">

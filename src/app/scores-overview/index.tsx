@@ -10,8 +10,10 @@ const ScoresOverview: React.FC = () => {
 
   return (
     <div>
-      ScoresOverview: {JSON.stringify(state.scores)},{' '}
-      {JSON.stringify(scoresPerPlayer)}
+      ScoresOverview:
+      <p>
+        {JSON.stringify(state.scores)}, {JSON.stringify(scoresPerPlayer)}
+      </p>
     </div>
   );
 };

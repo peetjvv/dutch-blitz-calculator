@@ -1,6 +1,6 @@
 import { Reducer, useMemo } from 'react';
 import { useStore } from '.';
-import { PayloadAction } from '../types/reducer';
+import { Action, PayloadAction } from '../types/reducer';
 import { throwIfNotNever } from '../util/typescript';
 
 type RoundScores = {
@@ -31,9 +31,12 @@ export type SetPlayerRoundCardsPlayedCountAction = PayloadAction<
   }
 >;
 
+export type ResetScoresStateAction = Action<'SCORES', 'RESET'>;
+
 export type ScoresAction =
   | SetPlayerRoundCardsInBlitzCountAction
-  | SetPlayerRoundCardsPlayedCountAction;
+  | SetPlayerRoundCardsPlayedCountAction
+  | ResetScoresStateAction;
 
 export const defaultState: ScoresState = [];
 
@@ -107,6 +110,9 @@ export const reducer: Reducer<ScoresState, ScoresAction> = (
 
       return nextState;
     }
+
+    case 'RESET':
+      return defaultState;
 
     default:
       throwIfNotNever(action);

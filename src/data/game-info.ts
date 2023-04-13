@@ -1,6 +1,6 @@
 import { Reducer } from 'react';
 import { useStore } from '.';
-import { PayloadAction } from '../types/reducer';
+import { Action, PayloadAction } from '../types/reducer';
 import { throwIfNotNever } from '../util/typescript';
 
 type PlayerInfo = { id: string; name?: string };
@@ -29,10 +29,13 @@ export type SetPlayerNameAction = PayloadAction<
   { playerId: string; name: string }
 >;
 
+export type ResetGameInfoStateAction = Action<'GAME_INFO', 'RESET'>;
+
 export type GameInfoAction =
   | SetHasVisitedSettingsPageAction
   | SetTargetScoreAction
-  | SetPlayerNameAction;
+  | SetPlayerNameAction
+  | ResetGameInfoStateAction;
 
 export const defaultState: GameInfoState = {
   targetScore: 75,
@@ -65,6 +68,9 @@ export const reducer: Reducer<GameInfoState, GameInfoAction> = (
         },
       };
     }
+
+    case 'RESET':
+      return defaultState;
 
     default:
       throwIfNotNever(action);

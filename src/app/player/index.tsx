@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { memo, useRef } from 'react';
+import { memo, useCallback, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useStore } from '../../data';
 import { usePlayer } from '../../data/game-info';
@@ -20,6 +20,16 @@ const Player: React.FC<{ creatingNewPlayer: boolean }> = props => {
   const player = usePlayer(playerId);
   const currentScore = usePlayerCurrentScore(playerId);
 
+  const savePlayerHandler = useCallback(
+    (playerName: string) =>
+      dispatch({
+        type: 'GAME_INFO',
+        subType: 'SET_PLAYER_NAME_ACTION',
+        payload: { playerId, name: playerName },
+      }),
+    []
+  );
+
   return (
     <div>
       <h1>{creatingNewPlayer ? 'New Player' : 'Player'}</h1>
@@ -28,13 +38,7 @@ const Player: React.FC<{ creatingNewPlayer: boolean }> = props => {
         <input
           type="text"
           value={player.name ?? ''}
-          onChange={e =>
-            dispatch({
-              type: 'GAME_INFO',
-              subType: 'SET_PLAYER_NAME_ACTION',
-              payload: { playerId, name: e.target.value },
-            })
-          }
+          onChange={e => savePlayerHandler(e.target.value)}
         />
       </label>
       {JSON.stringify(player)} - {currentScore}
