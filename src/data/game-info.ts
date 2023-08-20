@@ -62,7 +62,7 @@ export const reducer: Reducer<GameInfoState, GameInfoAction> = (
         players: {
           ...prevState.players,
           [playerId]: {
-            ...(prevState.players[playerId] || { playerId }),
+            id: playerId,
             name,
           },
         },
@@ -82,4 +82,10 @@ export const usePlayer = (playerId: string): PlayerInfo => {
   const { state } = useStore();
 
   return state.gameInfo.players[playerId] || { id: playerId };
+};
+
+export const usePlayers = (): { [playerId: string]: PlayerInfo } => {
+  const { state } = useStore();
+
+  return state.gameInfo.players;
 };

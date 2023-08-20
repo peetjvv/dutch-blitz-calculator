@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useEffect, useReducer } from 'react';
 import {
-  createBrowserRouter,
   Outlet,
   RouterProvider,
+  createBrowserRouter,
   useNavigate,
   useNavigation,
 } from 'react-router-dom';
@@ -15,6 +15,7 @@ import {
 } from '../data';
 import NavBar from './nav-bar';
 import Player from './player';
+import PlayerRoundScore from './player-round-score';
 import Players from './players';
 import ScoresOverview from './scores-overview';
 import Settings from './settings';
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
         element: <Player creatingNewPlayer={false} />,
       },
       { path: 'players/new', element: <Player creatingNewPlayer={true} /> },
+      {
+        path: 'scores/:roundIdx/:playerId',
+        element: <PlayerRoundScore />,
+      },
       {
         path: 'scores-overview',
         element: <ScoresOverview />,

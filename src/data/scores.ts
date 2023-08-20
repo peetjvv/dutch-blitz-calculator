@@ -3,11 +3,13 @@ import { useStore } from '.';
 import { Action, PayloadAction } from '../types/reducer';
 import { throwIfNotNever } from '../util/typescript';
 
+export type RoundScore = {
+  cardsInBlitzCount?: number;
+  cardsPlayedCount?: number;
+};
+
 type RoundScores = {
-  [playerId: string]: {
-    cardsInBlitzCount?: number;
-    cardsPlayedCount?: number;
-  };
+  [playerId: string]: RoundScore;
 };
 export type ScoresState = RoundScores[];
 
@@ -59,23 +61,27 @@ export const reducer: Reducer<ScoresState, ScoresAction> = (
         );
       }
 
-      const nextState: ScoresState = prevState.reduce((agg, curr, idx) => {
-        if (idx === roundIdx) {
-          if (!agg[roundIdx]) {
-            agg[roundIdx] = {};
+      if (!prevState[roundIdx]) {
+        return [...prevState, { [playerId]: { cardsInBlitzCount } }];
+      } else {
+        const nextState: ScoresState = prevState.reduce((agg, _, idx) => {
+          if (idx === roundIdx) {
+            if (!agg[roundIdx]) {
+              agg[roundIdx] = {};
+            }
+            if (!agg[roundIdx][playerId]) {
+              agg[roundIdx][playerId] = {};
+            }
+            agg[roundIdx][playerId] = {
+              ...agg[roundIdx][playerId],
+              cardsInBlitzCount,
+            };
           }
-          if (!agg[roundIdx][playerId]) {
-            agg[roundIdx][playerId] = {};
-          }
-          agg[roundIdx][playerId] = {
-            ...agg[roundIdx][playerId],
-            cardsInBlitzCount,
-          };
-        }
-        return agg;
-      }, prevState);
+          return agg;
+        }, prevState);
 
-      return nextState;
+        return nextState;
+      }
     }
 
     case 'SET_PLAYER_ROUND_CARDS_PLAYED': {
@@ -92,23 +98,27 @@ export const reducer: Reducer<ScoresState, ScoresAction> = (
         );
       }
 
-      const nextState: ScoresState = prevState.reduce((agg, curr, idx) => {
-        if (idx === roundIdx) {
-          if (!agg[roundIdx]) {
-            agg[roundIdx] = {};
+      if (!prevState[roundIdx]) {
+        return [...prevState, { [playerId]: { cardsPlayedCount } }];
+      } else {
+        const nextState: ScoresState = prevState.reduce((agg, _, idx) => {
+          if (idx === roundIdx) {
+            if (!agg[roundIdx]) {
+              agg[roundIdx] = {};
+            }
+            if (!agg[roundIdx][playerId]) {
+              agg[roundIdx][playerId] = {};
+            }
+            agg[roundIdx][playerId] = {
+              ...agg[roundIdx][playerId],
+              cardsPlayedCount,
+            };
           }
-          if (!agg[roundIdx][playerId]) {
-            agg[roundIdx][playerId] = {};
-          }
-          agg[roundIdx][playerId] = {
-            ...agg[roundIdx][playerId],
-            cardsPlayedCount,
-          };
-        }
-        return agg;
-      }, prevState);
+          return agg;
+        }, prevState);
 
-      return nextState;
+        return nextState;
+      }
     }
 
     case 'RESET':
@@ -156,4 +166,13 @@ export const usePlayersCurrentScores = () => {
   );
 
   return scoresPerPlayer;
+};
+
+export const usePlayerRoundScore = (
+  roundIdx: number,
+  playerId: string
+): RoundScore | undefined => {
+  const { state } = useStore();
+
+  return (state.scores[roundIdx] || {})[playerId];
 };

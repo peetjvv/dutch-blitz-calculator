@@ -6,9 +6,9 @@
   "scripts": {
     "prepare": "husky install",
     "test": "jest --coverage",
-    "start": "webpack serve --mode=development --host 0.0.0.0 --history-api-fallback --config=./webpack.config.dev.ts",
+    "start": "webpack serve --mode=development --host 0.0.0.0 --history-api-fallback",
     "clean": "rimraf build",
-    "webpack-build": "webpack --mode=production",
+    "webpack-build": "webpack --mode=production --config=./webpack.config.prod.ts",
     "build": "npm run clean && npm run webpack-build",
     "eslint": "eslint src --color --cache",
     "eslint:fix": "npm run lint -- --fix",
