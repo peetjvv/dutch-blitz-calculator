@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "test": "jest --coverage",
-    "start": "webpack serve --env development --mode=development --host 0.0.0.0 --history-api-fallback",
+    "start": "webpack serve --env development --mode=development --host 0.0.0.0 --history-api-fallback --config=./webpack.config.dev.ts",
     "clean": "rimraf build",
     "webpack-build": "webpack --env production --mode=production",
     "build": "npm run clean && npm run webpack-build",
