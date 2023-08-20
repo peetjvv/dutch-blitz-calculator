@@ -1,10 +1,9 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import WorkboxPlugin from 'workbox-webpack-plugin';
+import webpack from 'webpack';
 
-module.exports = env => {
+const configBuilder = (env: { development?: true }): webpack.Configuration => {
   const isDevServer = !!env.development;
 
   return {
@@ -80,9 +79,8 @@ module.exports = env => {
           })
         : null,
     ].filter(plugin => !!plugin),
-    devServer: {
-      historyApiFallback: true,
-    },
     devtool: 'source-map',
   };
 };
+
+export default configBuilder;
