@@ -1,0 +1,33 @@
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+  background-color: blue;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    min-height: 30px;
+
+    padding: 0.5rem 0.75rem;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    margin-bottom: unset;
+
+    text-decoration-line: none;
+  }
+}
+
+// dark mode overrides
+@if $allow-dark-mode {
+  @media (prefers-color-scheme: dark) {
+    .nav-bar {
+      background-color: lightskyblue;
+    }
+  }
+}
