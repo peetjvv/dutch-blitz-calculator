@@ -31,7 +31,7 @@ const Player: React.FC<{ creatingNewPlayer: boolean }> = props => {
   );
 
   return (
-    <div>
+    <main>
       <h1>{creatingNewPlayer ? 'New Player' : 'Player'}</h1>
       <label>
         Name
@@ -42,7 +42,7 @@ const Player: React.FC<{ creatingNewPlayer: boolean }> = props => {
         />
       </label>
       {JSON.stringify(player)} - {currentScore}
-    </div>
+    </main>
   );
 };
 

@@ -13,7 +13,7 @@ import {
   reducerContext,
   useStore,
 } from '../data';
-import NavBar from './nav-bar';
+import NavBar from './components/nav-bar';
 import Player from './player';
 import PlayerRoundScore from './player-round-score';
 import Players from './players';
@@ -44,7 +44,7 @@ const Root: React.FC = () => {
       ) : (
         <Outlet />
       )}
-      <NavBar direction="horizontal" />
+      <NavBar />
     </div>
   );
 };

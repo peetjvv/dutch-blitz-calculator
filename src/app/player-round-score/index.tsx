@@ -18,7 +18,7 @@ const PlayerRoundScore: React.FC = () => {
   const roundScore = usePlayerRoundScore(+roundIdx, playerId);
 
   return (
-    <div>
+    <main>
       <h1>
         {player.name || `Player: ${player.id}`} - Round {+roundIdx + 1}
       </h1>
@@ -27,6 +27,9 @@ const PlayerRoundScore: React.FC = () => {
         Cards in blitz pile
         <input
           type="number"
+          min={0}
+          max={10}
+          step={1}
           value={roundScore?.cardsInBlitzCount}
           onChange={e => {
             if (+e.target.value >= 0) {
@@ -48,6 +51,9 @@ const PlayerRoundScore: React.FC = () => {
         Blitz score
         <input
           type="number"
+          min={-20}
+          max={0}
+          step={1}
           value={(roundScore?.cardsInBlitzCount || 0) * -2}
           onChange={e => {
             if (+e.target.value <= 0) {
@@ -70,6 +76,8 @@ const PlayerRoundScore: React.FC = () => {
         Cards played
         <input
           type="number"
+          min={0}
+          step={1}
           value={roundScore?.cardsPlayedCount}
           onChange={e => {
             if (+e.target.value >= 0) {
@@ -86,7 +94,7 @@ const PlayerRoundScore: React.FC = () => {
           }}
         />
       </label>
-    </div>
+    </main>
   );
 };
 

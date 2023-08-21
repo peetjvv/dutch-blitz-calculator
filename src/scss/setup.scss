@@ -7,12 +7,115 @@ body {
   background-color: #fff;
 }
 
+a {
+  &[type='button'] {
+    text-decoration-line: none; // remove underline on links as buttons
+  }
+}
+
+button,
+[type='button'] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0.5rem 1rem;
+  border: unset;
+  border-radius: 0.5rem;
+
+  background-color: blue;
+  color: inherit;
+
+  font-size: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+
+  > input {
+    &[type='text'],
+    &[type='number'] {
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+input {
+  // remove spinner on number input
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type='number'] {
+    -moz-appearance: textfield; // firefox setting
+  }
+
+  &[type='text'],
+  &[type='number'] {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+table {
+  th,
+  td {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid black;
+  }
+
+  thead {
+  }
+
+  tbody {
+  }
+}
+
+a,
+button,
+[type='button'] {
+  cursor: pointer;
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+}
+
+a,
+input,
+button,
+[type='button'],
+table {
+  margin-bottom: 1rem;
+  color: inherit;
+}
+
 // dark mode overrides
 @if $allow-dark-mode {
   @media (prefers-color-scheme: dark) {
     body {
       color: #fff;
       background: #0d1117;
+    }
+
+    button,
+    [type='button'] {
+      background-color: lightskyblue;
+    }
+
+    input {
+      background-color: #2a323f;
+    }
+
+    table {
+      th,
+      td {
+        border-color: #f3f3f3;
+      }
     }
   }
 }

@@ -3,10 +3,23 @@
 @import './setup.scss';
 
 #app {
-  width: 100vw;
+  max-width: 800px;
   height: 100vh;
 
+  display: flex;
+  align-items: center;
+  margin: auto;
+
   .content {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    main {
+      flex-grow: 1;
+    }
   }
 }
 
@@ -17,3 +30,9 @@
 // mobile
 @media screen and (max-width: $breakpoint-mobile) {
 }
+
+// components
+@import '../app/components/styles.scss';
+
+// pages
+@import '../app/settings/styles.scss';

@@ -17,7 +17,7 @@ const Settings: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <main className="settings-page">
       <h1>Settings</h1>
 
       <label>
@@ -31,14 +31,20 @@ const Settings: React.FC = () => {
             dispatch({
               type: 'GAME_INFO',
               subType: 'SET_TARGET_SCORE',
-              payload: Number(e.target.value),
+              payload: +e.target.value,
             })
           }
         />
       </label>
 
-      <NavLink to="/players">Edit players</NavLink>
-      <NavLink to="/players/new">Create new player</NavLink>
+      <NavLink type="button" to="/players">
+        Edit players
+      </NavLink>
+
+      <NavLink type="button" to="/players/new">
+        Create new player
+      </NavLink>
+
       <button
         onClick={() => {
           dispatch({ type: 'GAME_INFO', subType: 'RESET' });
@@ -47,6 +53,7 @@ const Settings: React.FC = () => {
       >
         Reset game
       </button>
+
       <button
         onClick={() => {
           dispatch({ type: 'SCORES', subType: 'RESET' });
@@ -54,7 +61,7 @@ const Settings: React.FC = () => {
       >
         Clear rounds
       </button>
-    </div>
+    </main>
   );
 };
 

@@ -20,7 +20,7 @@ const ScoresOverview: React.FC = () => {
   );
 
   return (
-    <div>
+    <main>
       <h1>Scores</h1>
 
       <table>
@@ -82,11 +82,14 @@ const ScoresOverview: React.FC = () => {
       </table>
 
       {!!players.length ? (
-        <NavLink to={`/scores/${state.scores.length}/${players[0].id}`}>
+        <NavLink
+          type="button"
+          to={`/scores/${state.scores.length}/${players[0].id}`}
+        >
           Add round
         </NavLink>
       ) : null}
-    </div>
+    </main>
   );
 };
 
