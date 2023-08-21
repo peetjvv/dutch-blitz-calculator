@@ -12,9 +12,10 @@ jobs:
 
       - run: npm ci && npm run build
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: FirebaseExtended/action-hosting-deploy@v0.7.1
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PEETJVV_PORTAL }}'
           projectId: peetjvv-portal
           target: dutch-blitz-calculator
+          channelId: live
