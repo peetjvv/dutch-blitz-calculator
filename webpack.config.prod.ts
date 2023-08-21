@@ -1,9 +1,15 @@
+import path from 'path';
 import webpack from 'webpack';
 import WorkboxPlugin from 'workbox-webpack-plugin';
 import baseConfig from './webpack.config';
 
 const config: webpack.Configuration = {
   ...baseConfig,
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/',
+  },
   plugins: [
     ...(baseConfig.plugins || []),
     new WorkboxPlugin.GenerateSW({

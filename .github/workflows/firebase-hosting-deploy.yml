@@ -1,0 +1,20 @@
+name: Deploy to Firebase Hosting
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-to-firebase:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: npm ci && npm run build
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PEETJVV_PORTAL }}'
+          projectId: peetjvv-portal
+          target: dutch-blitz-calculator

@@ -1,14 +1,8 @@
-import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpack from 'webpack';
 
 const config: webpack.Configuration = {
   entry: './src/index.tsx',
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js',
-    publicPath: '/',
-  },
   module: {
     rules: [
       {
