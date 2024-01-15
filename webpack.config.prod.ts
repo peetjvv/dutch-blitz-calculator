@@ -22,7 +22,7 @@ const config: webpack.Configuration = {
       skipWaiting: true,
       // Increase maximum file size to cache so that we can cache dev build bundle.js files
       maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3MB
-      // Set fallback so that loading subpages without navigating in the app will load that page. SPA stuff.
+      // Set fallback so that loading sub-pages without navigating in the app will load that page. SPA stuff.
       navigateFallback: '/index.html',
     }),
   ],
